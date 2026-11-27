@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fig 1. Signup and login responses (Postman / server console)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Inter', sans-serif;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .postman-window {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .url-bar {
+      padding: 0.6rem 1rem;
+      background: #21262d;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid #30363d;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+    }
+    .method-post {
+      color: #ff9800;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .url-text {
+      flex: 1;
+      color: #f0f6fc;
+    }
+    .status-badge {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .status-201 { background: rgba(46, 160, 67, 0.2); color: #3fb950; }
+    .status-200 { background: rgba(56, 139, 253, 0.2); color: #58a6ff; }
+    .body-panel {
+      padding: 1rem 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      background: #0d1117;
+      overflow-x: auto;
+    }
+    .json-key { color: #79c0ff; }
+    .json-str { color: #a5d6ff; }
+    .caption {
+      text-align: center;
+      font-style: italic;
+      color: #8b949e;
+      font-size: 0.9rem;
+      margin-top: -0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Signup Postman Window -->
+  <div class="postman-window">
+    <div class="url-bar">
+      <span class="method-post">POST</span>
+      <span class="url-text">http://localhost:5000/api/auth/signup</span>
+      <span class="status-badge status-201">Status: 201 Created • Time: 72 ms</span>
+    </div>
+    <div class="body-panel">
+<pre>{
+  <span class="json-key">"message"</span>: <span class="json-str">"User registered"</span>,
+  <span class="json-key">"id"</span>: <span class="json-str">"6b091170b9cbcb3195d9aedd"</span>,
+  <span class="json-key">"username"</span>: <span class="json-str">"victor"</span>,
+  <span class="json-key">"email"</span>: <span class="json-str">"victor@example.com"</span>
+}</pre>
+    </div>
+  </div>
+
+  <!-- Login Postman Window -->
+  <div class="postman-window">
+    <div class="url-bar">
+      <span class="method-post">POST</span>
+      <span class="url-text">http://localhost:5000/api/auth/login</span>
+      <span class="status-badge status-200">Status: 200 OK • Time: 94 ms</span>
+    </div>
+    <div class="body-panel">
+<pre>{
+  <span class="json-key">"message"</span>: <span class="json-str">"Login successful"</span>,
+  <span class="json-key">"token"</span>: <span class="json-str">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZiMDkxMTcwYjljYmNiMzE5NWQ5YWVkZCIsInVzZXJuYW1lIjoidmljdG9yIiwiZW1haWwiOiJ2aWN0b3JAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc2NDIzNDgwMCwiZXhwIjoxNzY0MzIxMjAwfQ.sJ9T7v0m8Lq9k..."</span>
+}</pre>
+    </div>
+  </div>
+
+  <div class="caption">Fig 1. Signup and login responses (Postman / server console)</div>
+</body>
+</html>

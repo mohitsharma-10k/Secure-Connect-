@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MongoDB Compass - notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #001e2b;
+      --sidebar: #091316;
+      --panel: #0d2834;
+      --border: #1e3f4b;
+      --text: #e8edeb;
+      --green: #00ed64;
+      --blue: #0498ec;
+      --yellow: #f8e154;
+      --muted: #889396;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 280px;
+      background-color: var(--sidebar);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+    .compass-title {
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      border-bottom: 1px solid var(--border);
+      color: #fff;
+    }
+    .compass-title span { color: var(--green); }
+    .conn-status {
+      padding: 0.75rem 1.25rem;
+      font-size: 0.8rem;
+      color: var(--green);
+      background: rgba(0, 237, 100, 0.08);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; }
+    .tree { padding: 0.75rem; flex: 1; overflow-y: auto; font-size: 0.85rem; }
+    .db-row { padding: 0.5rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 0.5rem; }
+    .coll-row {
+      margin-left: 1.25rem;
+      padding: 0.45rem 0.6rem;
+      color: var(--muted);
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .coll-row.active {
+      background: var(--border);
+      color: #fff;
+      font-weight: 600;
+    }
+    .badge {
+      background: #153744;
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      color: var(--text);
+    }
+    .main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+    .header {
+      padding: 1.1rem 1.75rem;
+      background: #001923;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header-left { display: flex; align-items: baseline; gap: 0.5rem; }
+    .header-db { font-size: 1rem; color: var(--muted); }
+    .header-coll { font-size: 1.25rem; font-weight: 700; color: #fff; }
+    .tabs-bar {
+      display: flex;
+      gap: 1.75rem;
+      padding: 0 1.75rem;
+      background: #001923;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+    }
+    .tab {
+      padding: 0.75rem 0;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+    }
+    .tab.active {
+      color: var(--green);
+      border-bottom-color: var(--green);
+      font-weight: 600;
+    }
+    .content { padding: 1.5rem 1.75rem; display: flex; flex-direction: column; gap: 1rem; }
+    .filter-bar {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.7rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .btn-find {
+      background: var(--green);
+      color: #001e2b;
+      font-weight: 700;
+      padding: 0.35rem 1rem;
+      border-radius: 4px;
+      border: none;
+    }
+    .doc-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.65;
+    }
+    .k { color: #8ba2ab; }
+    .oid { color: var(--yellow); }
+    .str { color: var(--green); }
+    .dt { color: var(--blue); }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="compass-title">
+      <span>🍃</span> MongoDB Compass
+    </div>
+    <div class="conn-status">
+      <div class="dot"></div>
+      <span>localhost:27017</span>
+    </div>
+    <div class="tree">
+      <div class="db-row">📁 secure_connect_platform</div>
+      <div class="coll-row active">
+        <span>📄 notes</span>
+        <span class="badge">2</span>
+      </div>
+      <div class="coll-row">
+        <span>📄 users</span>
+        <span class="badge">2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <div class="header-left">
+        <span class="header-db">secure_connect_platform &gt;</span>
+        <span class="header-coll">notes</span>
+      </div>
+      <span style="font-size: 0.85rem; color: var(--muted);">2 documents</span>
+    </div>
+
+    <div class="tabs-bar">
+      <div class="tab active">Documents</div>
+      <div class="tab">Aggregations</div>
+      <div class="tab">Schema</div>
+      <div class="tab">Indexes</div>
+    </div>
+
+    <div class="content">
+      <div class="filter-bar">
+        <span>Filter: { }</span>
+        <button class="btn-find">Find</button>
+      </div>
+
+      <div class="doc-card" style="border-left: 4px solid var(--green);">
+        <div>{</div>
+        <div style="margin-left: 1.5rem;"><span class="k">_id:</span> <span class="oid">ObjectId("6b091170b9cbcb3195d9aede")</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">title:</span> <span class="str">"My First Note"</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">content:</span> <span class="str">"This is my first note of web dev -III"</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">owner:</span> <span class="str">"6b091170b9cbcb3195d9aedd"</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">createdAt:</span> <span class="dt">Date("2026-11-27T05:13:20.188Z")</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">updatedAt:</span> <span class="dt">Date("2026-11-27T05:13:20.188Z")</span></div>
+        <div>}</div>
+      </div>
+
+      <div class="doc-card">
+        <div>{</div>
+        <div style="margin-left: 1.5rem;"><span class="k">_id:</span> <span class="oid">ObjectId("6b091170b9cbcb3195d9aedf")</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">title:</span> <span class="str">"My Second Note"</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">content:</span> <span class="str">"This is my second note of web dev -III"</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">owner:</span> <span class="str">"6b091170b9cbcb3195d9aedd"</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">createdAt:</span> <span class="dt">Date("2026-11-27T05:16:20.190Z")</span>,</div>
+        <div style="margin-left: 1.5rem;"><span class="k">updatedAt:</span> <span class="dt">Date("2026-11-27T05:16:20.190Z")</span></div>
+        <div>}</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

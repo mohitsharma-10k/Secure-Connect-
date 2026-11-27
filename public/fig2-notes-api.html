@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fig 2. Notes API — blocked without a token, accessible with a valid JWT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Inter', sans-serif;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .postman-window {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .url-bar {
+      padding: 0.55rem 1rem;
+      background: #21262d;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid #30363d;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+    }
+    .method-get { color: #58a6ff; font-weight: 700; }
+    .method-post { color: #ff9800; font-weight: 700; }
+    .url-text { flex: 1; color: #f0f6fc; }
+    .status-badge { font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px; font-weight: 600; }
+    .status-403 { background: rgba(248, 81, 73, 0.2); color: #f85149; }
+    .status-201 { background: rgba(46, 160, 67, 0.2); color: #3fb950; }
+    .status-200 { background: rgba(56, 139, 253, 0.2); color: #58a6ff; }
+    .body-panel {
+      padding: 0.85rem 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      background: #0d1117;
+      overflow-x: auto;
+    }
+    .json-key { color: #79c0ff; }
+    .json-str { color: #a5d6ff; }
+    .caption {
+      text-align: center;
+      font-style: italic;
+      color: #8b949e;
+      font-size: 0.9rem;
+      margin-top: -0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Blocked 403 -->
+  <div class="postman-window">
+    <div class="url-bar">
+      <span class="method-get">GET</span>
+      <span class="url-text">http://localhost:5000/api/notes</span>
+      <span class="status-badge status-403">Status: 403 Forbidden • Time: 9 ms</span>
+    </div>
+    <div class="body-panel">
+<pre>{
+  <span class="json-key">"message"</span>: <span class="json-str">"No token provided"</span>
+}</pre>
+    </div>
+  </div>
+
+  <!-- Created 201 -->
+  <div class="postman-window">
+    <div class="url-bar">
+      <span class="method-post">POST</span>
+      <span class="url-text">http://localhost:5000/api/notes</span>
+      <span class="status-badge status-201">Status: 201 Created • Time: 22 ms</span>
+    </div>
+    <div class="body-panel">
+<pre>{
+  <span class="json-key">"_id"</span>: <span class="json-str">"6b091170b9cbcb3195d9aede"</span>,
+  <span class="json-key">"title"</span>: <span class="json-str">"My First Note"</span>,
+  <span class="json-key">"content"</span>: <span class="json-str">"This is my first note of web dev -III"</span>,
+  <span class="json-key">"owner"</span>: <span class="json-str">"6b091170b9cbcb3195d9aedd"</span>,
+  <span class="json-key">"createdAt"</span>: <span class="json-str">"2026-11-27T05:13:20.188Z"</span>,
+  <span class="json-key">"updatedAt"</span>: <span class="json-str">"2026-11-27T05:13:20.188Z"</span>
+}</pre>
+    </div>
+  </div>
+
+  <!-- Get Notes 200 -->
+  <div class="postman-window">
+    <div class="url-bar">
+      <span class="method-get">GET</span>
+      <span class="url-text">http://localhost:5000/api/notes</span>
+      <span class="status-badge status-200">Status: 200 OK • Time: 8 ms</span>
+    </div>
+    <div class="body-panel">
+<pre>[
+  {
+    <span class="json-key">"_id"</span>: <span class="json-str">"6b091170b9cbcb3195d9aede"</span>,
+    <span class="json-key">"title"</span>: <span class="json-str">"My First Note"</span>,
+    <span class="json-key">"content"</span>: <span class="json-str">"This is my first note of web dev -III"</span>,
+    <span class="json-key">"owner"</span>: <span class="json-str">"6b091170b9cbcb3195d9aedd"</span>,
+    <span class="json-key">"createdAt"</span>: <span class="json-str">"2026-11-27T05:13:20.188Z"</span>,
+    <span class="json-key">"updatedAt"</span>: <span class="json-str">"2026-11-27T05:13:20.188Z"</span>
+  },
+  {
+    <span class="json-key">"_id"</span>: <span class="json-str">"6b091170b9cbcb3195d9aedf"</span>,
+    <span class="json-key">"title"</span>: <span class="json-str">"My Second Note"</span>,
+    <span class="json-key">"content"</span>: <span class="json-str">"This is my second note of web dev -III"</span>,
+    <span class="json-key">"owner"</span>: <span class="json-str">"6b091170b9cbcb3195d9aedd"</span>,
+    <span class="json-key">"createdAt"</span>: <span class="json-str">"2026-11-27T05:16:20.190Z"</span>,
+    <span class="json-key">"updatedAt"</span>: <span class="json-str">"2026-11-27T05:16:20.190Z"</span>
+  }
+]</pre>
+    </div>
+  </div>
+
+  <div class="caption">Fig 2. Notes API — blocked without a token, accessible with a valid JWT</div>
+</body>
+</html>

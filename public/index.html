@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab 4: Secure Connect and Communication Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      <span class="badge">Lab 4</span>
+      <h1>Secure Connect &amp; Communication Platform</h1>
+    </div>
+    <div class="user-status" id="userStatus">
+      <span class="status-indicator"></span>
+      <span id="currentUserLabel">Not authenticated</span>
+      <button id="logoutBtn" class="btn btn-sm btn-outline hidden">Logout</button>
+    </div>
+  </header>
+
+  <main class="dashboard-grid">
+    <!-- Column 1: Auth & User Profile -->
+    <section class="card">
+      <div class="card-header">
+        <h2>🔐 1. Authentication</h2>
+        <span class="subtext">JWT + bcrypt</span>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="signupTab">Signup</button>
+        <button class="tab-btn" data-tab="loginTab">Login</button>
+      </div>
+
+      <!-- Signup Form -->
+      <div id="signupTab" class="tab-content active">
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="signupUsername">Username</label>
+            <input type="text" id="signupUsername" placeholder="e.g. victor" required>
+          </div>
+          <div class="form-group">
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" placeholder="e.g. victor@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" placeholder="e.g. 123456" required>
+          </div>
+          <div class="form-group">
+            <label for="signupRole">Role</label>
+            <select id="signupRole">
+              <option value="user">User (Standard)</option>
+              <option value="admin">Admin (RBAC Protected)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary full-width">Sign Up</button>
+        </form>
+      </div>
+
+      <!-- Login Form -->
+      <div id="loginTab" class="tab-content">
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" placeholder="e.g. victor@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="e.g. 123456" required>
+          </div>
+          <button type="submit" class="btn btn-success full-width">Login</button>
+        </form>
+      </div>
+
+      <div class="token-box">
+        <div class="token-header">
+          <span>Active JWT Token:</span>
+          <button id="clearTokenBtn" class="btn-link">Clear</button>
+        </div>
+        <textarea id="tokenDisplay" readonly placeholder="No token active (Requests will test 403 Forbidden without token)"></textarea>
+      </div>
+    </section>
+
+    <!-- Column 2: Protected Notes API -->
+    <section class="card">
+      <div class="card-header">
+        <h2>📝 2. Secure Notes API</h2>
+        <span class="subtext">CRUD &amp; Protected Routes</span>
+      </div>
+
+      <form id="createNoteForm" class="note-form">
+        <div class="form-group">
+          <input type="text" id="noteTitle" placeholder="Note Title (e.g. My First Note)" required>
+        </div>
+        <div class="form-group">
+          <textarea id="noteContent" rows="3" placeholder="Note Content (e.g. This is my first note of web dev -III)" required></textarea>
+        </div>
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary">Add Note</button>
+          <button type="button" id="fetchNotesBtn" class="btn btn-outline">Refresh Notes</button>
+          <button type="button" id="testNoTokenBtn" class="btn btn-danger-outline" title="Send request without token to see 403 response">Test 403 Forbidden</button>
+        </div>
+      </form>
+
+      <div class="notes-container">
+        <div class="notes-header">
+          <h3>Your Notes</h3>
+          <span id="notesCount" class="badge-count">0</span>
+        </div>
+        <div id="notesList" class="notes-list">
+          <div class="empty-state">No notes loaded. Log in to view or create notes.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Column 3: Real-Time Chat (Socket.IO) -->
+    <section class="card">
+      <div class="card-header">
+        <h2>💬 3. Real-Time Chat</h2>
+        <span class="subtext">Socket.IO &amp; WebSockets</span>
+      </div>
+
+      <div class="chat-controls">
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="chatUser">Display Name</label>
+            <input type="text" id="chatUser" placeholder="e.g. Aditi" value="Aditi">
+          </div>
+          <div class="form-group flex-1">
+            <label for="chatRoom">Room</label>
+            <input type="text" id="chatRoom" placeholder="e.g. general" value="general">
+          </div>
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <button id="joinRoomBtn" class="btn btn-secondary">Join</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="chatMessages" class="chat-messages">
+        <div class="system-msg">Connecting to real-time chat...</div>
+      </div>
+
+      <form id="chatForm" class="chat-input-form">
+        <input type="text" id="chatInput" placeholder="Type a message (e.g. Hey team, backend is ready 🚀)" required>
+        <button type="submit" class="btn btn-primary">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Live Output & Console Viewer -->
+  <footer class="console-viewer">
+    <div class="console-header">
+      <span>🖥️ Live Server &amp; Event Logs</span>
+      <button id="clearLogsBtn" class="btn-link">Clear</button>
+    </div>
+    <div id="consoleLogs" class="console-body">
+      <div class="log-line info">[client] Dashboard ready. Connects to backend on http://localhost:5000</div>
+    </div>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
